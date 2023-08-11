@@ -6,14 +6,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -21,6 +26,12 @@ import br.com.dao.FabricanteDAO;
 import br.com.dao.ProdutoDAO;
 import br.com.domain.Fabricante;
 import br.com.domain.Produto;
+import br.com.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -157,4 +168,46 @@ public class ProdutoBean implements Serializable {
 		}
 		
 	}
+	public void imprimir() {
+		  try{
+			  
+		  DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+		  
+		  Map<String, Object> filtros = tabela.getFilters();
+		  
+		  String prodDescricao = (String) filtros.get("descricao");
+		  String fabDescricao = (String) filtros.get("fabricantes.descricao");
+			  
+		  String caminho = Faces.getRealPath("reports/produtos.jrxml");
+		  
+		  JasperCompileManager.compileReportToFile(caminho);
+		  
+		  Map<String, Object> parametros = new HashMap<>();
+		  
+		  if(prodDescricao == null) {
+			  parametros.put("PRODUTO_DESCRICAO", "%%");
+		  }else {
+			  parametros.put("PRODUTO_DESCRICAO","%"+prodDescricao+"%");
+		  }
+		  
+		  if(fabDescricao == null) {
+			  parametros.put("FABRICANTE_DESCRICAO", "%%");
+		  }else {
+			  parametros.put("FABRICANTE_DESCRICAO","%"+fabDescricao+"%");
+		  }
+		  
+		  Connection conexao = HibernateUtil.getConexao();
+		  
+		  caminho = caminho.replaceAll("jrxml","jasper");
+		  
+		  JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+		  JasperPrintManager.printReport(relatorio, true);
+		  
+		  } catch (JRException erro){
+		   Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
+		   
+		   erro.printStackTrace();
+		  }
+		 }
+	
 }

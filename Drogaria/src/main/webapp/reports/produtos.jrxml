@@ -46,16 +46,6 @@ ORDER BY drogaria.produto.descricao ASC,
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="89" splitType="Stretch">
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="0" width="555" height="89" uuid="2a997323-bbcf-4510-b39a-cec7b20e1e76">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<imageExpression><![CDATA["C:/Eclipse Workspace/Drogaria/src/main/webapp/resources/images/banner.png"]]></imageExpression>
-			</image>
-		</band>
-	</title>
 	<pageHeader>
 		<band height="47" splitType="Stretch">
 			<staticText>

@@ -22,10 +22,12 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
+						<p:commandButton value="Imprimir" actionListener="#{produtoBean.imprimir}" />
 					</f:facet>
 
-					<p:column headerText="Descrição">
-						<h:outputText value="#{produto.descricao}" />
+					<p:column headerText="Descrição" filterBy="#{produto.descricao}"
+					filterMatchMode="contains" sortBy="#{produto.descricao}">
+					<h:outputText value="#{produto.descricao}" />
 					</p:column>
 
 					<p:column headerText="Quantidade">
@@ -38,8 +40,10 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Fabricante">
-						<h:outputText value="#{produto.fabricante.descricao}" />
+					<p:column headerText="Fabricante"
+					filterBy="#{produto.fabricante.descricao}"
+					filterMatchMode="contains" sortBy="#{produto.fabricante.descricao}">
+					<h:outputText value="#{produto.fabricante.descricao}" />
 					</p:column>
 
 					<p:column headerText="Opções">
