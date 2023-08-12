@@ -47,9 +47,9 @@ ORDER BY drogaria.produto.descricao ASC,
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="47" splitType="Stretch">
+		<band height="52" splitType="Stretch">
 			<staticText>
-				<reportElement x="60" y="17" width="440" height="30" uuid="4b7e291a-68a6-4d5d-b8b4-6059e0e361b9"/>
+				<reportElement x="65" y="0" width="440" height="30" uuid="4b7e291a-68a6-4d5d-b8b4-6059e0e361b9"/>
 				<textElement textAlignment="Center">
 					<font size="18" isBold="true" isUnderline="true"/>
 				</textElement>
