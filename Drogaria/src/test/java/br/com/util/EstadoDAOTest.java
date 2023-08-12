@@ -246,8 +246,6 @@ public class EstadoDAOTest {
 		
 		itemVendaDAO.salvar(itemVenda);
 		
-		
-		
 	}
 
 }

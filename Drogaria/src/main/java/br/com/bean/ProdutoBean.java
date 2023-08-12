@@ -1,5 +1,7 @@
 package br.com.bean;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -31,7 +33,8 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -168,46 +171,43 @@ public class ProdutoBean implements Serializable {
 		}
 		
 	}
-	public void imprimir() {
-		  try{
-			  
-		  DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+	public void imprimir() throws FileNotFoundException {
+		
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+			Map<String, Object> filtros = tabela.getFilters();
+
+			String proDescricao = (String) filtros.get("descricao");
+			String fabDescricao = (String) filtros.get("fabricante.descricao");
+			
+			FileInputStream inputStream = new FileInputStream(Faces.getRealPath("/reports/produtos.jrxml"));
+			JasperReport caminho = JasperCompileManager.compileReport(inputStream);
+			
+
+			Map<String, Object> parametros = new HashMap<>();
+			if (proDescricao == null) {
+				parametros.put("PRODUTO_DESCRICAO", "%%");
+			} else {
+				parametros.put("PRODUTO_DESCRICAO", "%" + proDescricao + "%");
+			}
+			if (fabDescricao == null) {
+				parametros.put("FABRICANTE_DESCRICAO", "%%");
+			} else {
+				parametros.put("FABRICANTE_DESCRICAO", "%" + fabDescricao + "%");
+			}
+
+			Connection conexao = HibernateUtil.getConexao();
+
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			
+			JasperViewer.viewReport(relatorio, true);
+			
+			
+		} catch (JRException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
+			erro.printStackTrace();
+		}
+	}	  
 		  
-		  Map<String, Object> filtros = tabela.getFilters();
-		  
-		  String prodDescricao = (String) filtros.get("descricao");
-		  String fabDescricao = (String) filtros.get("fabricantes.descricao");
-			  
-		  String caminho = Faces.getRealPath("reports/produtos.jrxml");
-		  
-		  JasperCompileManager.compileReportToFile(caminho);
-		  
-		  Map<String, Object> parametros = new HashMap<>();
-		  
-		  if(prodDescricao == null) {
-			  parametros.put("PRODUTO_DESCRICAO", "%%");
-		  }else {
-			  parametros.put("PRODUTO_DESCRICAO","%"+prodDescricao+"%");
-		  }
-		  
-		  if(fabDescricao == null) {
-			  parametros.put("FABRICANTE_DESCRICAO", "%%");
-		  }else {
-			  parametros.put("FABRICANTE_DESCRICAO","%"+fabDescricao+"%");
-		  }
-		  
-		  Connection conexao = HibernateUtil.getConexao();
-		  
-		  caminho = caminho.replaceAll("jrxml","jasper");
-		  
-		  JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
-		  JasperPrintManager.printReport(relatorio, true);
-		  
-		  } catch (JRException erro){
-		   Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
-		   
-		   erro.printStackTrace();
-		  }
-		 }
 	
 }
