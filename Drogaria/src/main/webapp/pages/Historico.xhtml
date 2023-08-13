@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Históricos de Produtos</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem" />
+
+	<div id="geral">
+
+		<div id="topo" class="divTopo">
+			<p:graphicImage library="images" name="banner.png"
+				styleClass="imagemCentralizada" />
+		</div>
+
+		<div id="cabecalho">
+			<h:form id="formMenu">
+				<p:menubar>
+					<p:submenu label="Arquivo">
+						<p:menuitem value="Sair" />
+					</p:submenu>
+
+					<p:submenu label="Cadastros">
+						<p:menuitem value="Estado" url="/pages/Estado.xhtml" />
+						<p:menuitem value="Cidade" url="/pages/Cidade.xhtml" />
+						<p:menuitem value="Fabricante" url="/pages/Fabricante.xhtml" />
+						<p:menuitem value="Produto" url="/pages/Produto.xhtml" />
+						<p:menuitem value="Pessoa" url="/pages/Pessoa.xhtml" />
+						<p:menuitem value="Cliente" url="/pages/Cliente.xhtml" />
+						<p:menuitem value="Funcionário" url="/pages/Funcionario.xhtml" />
+
+					</p:submenu>
+
+					<p:submenu label="Movimentações">
+						<p:menuitem value="Venda" url="/pages/Venda.xhtml" />
+
+					</p:submenu>
+
+					<p:submenu label="Ajuda">
+						<p:menuitem value="Sobre" />
+					</p:submenu>
+
+				</p:menubar>
+			</h:form>
+		</div>
+
+		<h:form id="formPesquisa">
+			<div align="center" style="margin-top: 5%">
+				<p:panel header="Produto Pesquisar" style="width:25%">
+
+					<h:panelGrid columns="3">
+						<p:outputLabel for="codigo" value="Código Produto:" />
+						<p:inputText id="codigo" size="10" maxlength="13" required="true"
+							requiredMessage="O campo código é obrigatório."
+							converterMessage="O valor infomado no campo código é inválido."
+							validatorMessage="Informe um valor numérico válido para o campo Código."
+							value="#{historicoBean.produto.codigo}" >
+							<f:validateLongRange minimum="1" maximum="9999999999999" />
+							</p:inputText>
+						<p:commandButton icon="ui-icon-search"
+							actionListener="#{historicoBean.buscar}"
+							update=":formPesquisa:painelDados :mensagem " />
+					</h:panelGrid>
+
+
+				</p:panel>
+				<p:panel header="Resultado Pesquisa"
+					style="width:25%; margin-top: 2%">
+					<h:panelGroup layout="block" id="painelDados">
+						<h:panelGrid columns="2"
+							rendered="#{historicoBean.exibir}">
+
+							<p:outputLabel value="Descrição:" />
+							<h:inputText value="#{historicoBean.produto.descricao}"
+								readonly="true" />
+
+							<p:outputLabel value="Preço:" />
+							<h:inputText value="#{historicoBean.produto.preco}"
+								readonly="true" >
+								<f:convertNumber locale="pt_BR" minIntegerDigits="2" />
+								</h:inputText>
+
+							<p:outputLabel value="Quantidade:" />
+							<h:inputText value="#{historicoBean.produto.quantidade}"
+								readonly="true" />
+
+							<p:outputLabel value="Fabricante" />
+							<h:inputText
+								value="#{historicoBean.produto.fabricante.descricao}"
+								readonly="true" />
+
+
+						</h:panelGrid>
+					</h:panelGroup>
+				</p:panel>
+			</div>
+		</h:form>
+	</div>
+
+</h:body>
+</html>
