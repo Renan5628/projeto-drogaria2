@@ -25,12 +25,12 @@ public class Historico extends GenericDomain {
 	private Produto produto;
 	
 
-	public Date getHoraio() {
+	public Date getHorario() {
 		return horario;
 	}
 
-	public void setHoraio(Date horaio) {
-		this.horario = horaio;
+	public void setHorario(Date horario) {
+		this.horario = horario;
 	}
 
 	public String getObservacoes() {

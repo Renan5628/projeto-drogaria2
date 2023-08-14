@@ -1,64 +1,91 @@
 package br.com.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.omnifaces.util.Messages;
 
+import br.com.dao.HistoricoDAO;
 import br.com.dao.ProdutoDAO;
+import br.com.domain.Historico;
 import br.com.domain.Produto;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class HistoricoBean implements Serializable {
-	
 	private Produto produto;
-	private Boolean exibir;
+	private Boolean exibePainelDados;
 	
+	private Historico historico;
+
 	public Produto getProduto() {
 		return produto;
 	}
-	
+
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
+
+	public Boolean getExibePainelDados() {
+		return exibePainelDados;
+	}
+
+	public void setExibePainelDados(Boolean exibePainelDados) {
+		this.exibePainelDados = exibePainelDados;
+	}
 	
+	public Historico getHistorico() {
+		return historico;
+	}
+	
+	public void setHistorico(Historico historico) {
+		this.historico = historico;
+	}
+
 	@PostConstruct
 	public void novo() {
+		historico = new Historico();
 		produto = new Produto();
-		exibir = false;
+		exibePainelDados = false;
 	}
-	
-	public Boolean getExibir() {
-		return exibir;
-	}
-	public void setExibir(Boolean exibir) {
-		this.exibir = exibir;
-	}
-	
+
 	public void buscar() {
 		try {
+			ProdutoDAO produtoDAO = new ProdutoDAO();
+			Produto resultado = produtoDAO.buscar(produto.getCodigo());
 			
-			ProdutoDAO dao = new ProdutoDAO();
-			Produto resultado = dao.buscar(produto.getCodigo());
-			
+
 			if (resultado == null) {
-				Messages.addGlobalWarn("Não existe o produto cadastrado para o código informado.");
-				exibir = false;
-			}else {
-				exibir = true;
+				exibePainelDados = false;
+				Messages.addGlobalWarn("Não existe produto cadastrado para o código informado");
+			} else {
+				exibePainelDados = true;
 				produto = resultado;
 			}
 			
-			
-		} catch (Exception e) {
-			Messages.addGlobalError("Erro ao buscar o produto pelo código.");
-			e.printStackTrace();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar buscar o produto");
+			erro.printStackTrace();
 		}
 	}
-	
+
+	public void salvar() {
+		try {
+			historico.setHorario(new Date());
+			historico.setProduto(produto);
+			
+			HistoricoDAO historicoDAO = new HistoricoDAO();
+			historicoDAO.salvar(historico);
+			
+			Messages.addGlobalInfo("Histórico salvo com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o histórico");
+			erro.printStackTrace();
+		}
+	}
 }
