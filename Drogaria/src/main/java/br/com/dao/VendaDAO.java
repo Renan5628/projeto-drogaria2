@@ -29,9 +29,19 @@ public class VendaDAO extends GenericDAO<Venda>{
 				sessao.save(itemvenda);
 				
 				Produto produto = itemvenda.getProduto();
-				produto.setQuantidade(new Short((produto.getQuantidade() - itemvenda.getQuantidade()) + ""));
 				
-				sessao.update(produto);
+				int quantidade = produto.getQuantidade() - itemvenda.getQuantidade();
+				
+				if(quantidade >= 0) {
+					
+					produto.setQuantidade(new Short(quantidade + ""));
+					sessao.update(produto);
+					
+				}else {
+					throw new RuntimeException("Quantidade insuficiente em estoque.");
+					
+				}
+				
 				
 			}
 			
