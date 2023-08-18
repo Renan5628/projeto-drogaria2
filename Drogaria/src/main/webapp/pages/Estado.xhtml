@@ -27,7 +27,7 @@
 
 					<p:column headerText="Nome" filterBy="#{estado.nome}"
 						sortBy="#{estado.nome}">
-						<h:outputText value="#{estado.nome}" />
+						<h:outputText id="nome" value="#{estado.nome}" converter="upperCaseConverter" />
 					</p:column>
 
 					<p:column headerText="Sigla">
@@ -74,12 +74,15 @@
 					<p:outputLabel for="nome" value="Nome:" />
 					<p:inputText id="nome" maxlength="50" size="30"
 						value="#{estadoBean.estado.nome}" required="true"
-						requiredMessage="O campo 'Nome' é obrigatório." />
+						requiredMessage="O campo 'Nome' é obrigatório." converter="upperCaseConverter" >
+						<p:ajax event="blur" update="@this" />
+					</p:inputText>
 
 					<p:outputLabel for="sigla" value="Sigla:" />
 					<p:inputText id="sigla" maxlength="2" size="10"
 						value="#{estadoBean.estado.sigla}" required="true"
-						requiredMessage="O campo 'Sigla' é obrigatório." />
+						requiredMessage="O campo 'Sigla' é obrigatório." converter="upperCaseConverter" />
+						<p:ajax event="blur" update="@this" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
