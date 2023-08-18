@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -16,6 +17,7 @@ import br.com.dao.FuncionarioDAO;
 import br.com.dao.ItemVendaDAO;
 import br.com.dao.PessoaDAO;
 import br.com.dao.ProdutoDAO;
+import br.com.dao.UsuarioDAO;
 import br.com.dao.VendaDAO;
 import br.com.domain.Cidade;
 import br.com.domain.Cliente;
@@ -25,9 +27,10 @@ import br.com.domain.Funcionario;
 import br.com.domain.ItemVenda;
 import br.com.domain.Pessoa;
 import br.com.domain.Produto;
+import br.com.domain.Usuario;
 import br.com.domain.Venda;
 
-public class EstadoDAOTest {
+public class TestesDAO {
 
 	@Test
 	@Ignore
@@ -247,5 +250,34 @@ public class EstadoDAOTest {
 		itemVendaDAO.salvar(itemVenda);
 		
 	}
+	
+	@Test
+	public void UsuarioSalvar() {
+		PessoaDAO pessoaDAO = new PessoaDAO();
+		Pessoa pessoa = pessoaDAO.buscar(1l);
+		
+		
+		System.out.println("Pessoa encontrada");
+		System.out.println("Nome:" + pessoa.getNome());
+		System.out.println("CPF:" + pessoa.getCpf());
+		
+		
+		Usuario usuario = new Usuario();
+		usuario.setAtivo(false);
+		usuario.setPessoa(pessoa);
+		usuario.setSenhaSemCriptografia("elefante123");
+		
+		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
+		usuario.setSenha(hash.toHex());
+		
+		usuario.setTipo('G');
+		
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		usuarioDAO.salvar(usuario);
+		
+		System.out.println("Usuário salvo com sucesso.");
+		
+	}
+	
 
 }
