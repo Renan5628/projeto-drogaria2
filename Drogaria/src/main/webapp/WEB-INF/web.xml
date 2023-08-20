@@ -7,7 +7,7 @@
 	<display-name>Drogaria</display-name>
 	
 	<welcome-file-list>
-		<welcome-file>pages/Principal.xhtml</welcome-file> 
+		<welcome-file>pages/Autenticacao.xhtml</welcome-file>
 	</welcome-file-list>
 	
 	<context-param>

@@ -265,12 +265,12 @@ public class TestesDAO {
 		Usuario usuario = new Usuario();
 		usuario.setAtivo(false);
 		usuario.setPessoa(pessoa);
-		usuario.setSenhaSemCriptografia("elefante123");
+		usuario.setSenhaSemCriptografia("12345678");
 		
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
 		usuario.setSenha(hash.toHex());
 		
-		usuario.setTipo('G');
+		usuario.setTipo('A');
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);

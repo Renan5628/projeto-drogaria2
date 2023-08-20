@@ -10,6 +10,7 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.omnifaces.util.Messages.Message;
 
+import br.com.dao.UsuarioDAO;
 import br.com.domain.Pessoa;
 import br.com.domain.Usuario;
 
@@ -18,6 +19,7 @@ import br.com.domain.Usuario;
 public class AutenticacaoBean {
 
 	private Usuario usuario;
+	private Usuario usuarioLogado;
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -25,6 +27,14 @@ public class AutenticacaoBean {
 	
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
+	}
+	
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 	
 	@PostConstruct
@@ -35,6 +45,15 @@ public class AutenticacaoBean {
 	
 	public void autenticar() {
 		try {
+			
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			
+			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getCpf(), usuario.getSenha());
+			
+			if (usuarioLogado == null) {
+				Messages.addGlobalError("CPF e/ou senha incorretos.");
+				return;
+			}
 			
 			Faces.redirect("./pages/Principal.xhtml");
 			
