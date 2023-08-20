@@ -101,13 +101,22 @@ public class FabricanteBean implements Serializable {
 	public void excluir(ActionEvent evento) {
 		try {
 			fabricante = (Fabricante) evento.getComponent().getAttributes().get("fabricanteSelecionado");
+			
+			Client cliente = ClientBuilder.newClient();
+			WebTarget caminho =  cliente.target("http://127.0.0.1:8080/Drogaria/rest/fabricante");
+			
+			WebTarget caminhoExcluir = caminho.path("{codigo}").resolveTemplate("codigo", fabricante.getCodigo());
+			
+			caminhoExcluir.request().delete();
+			
+			Gson gson = new Gson();
 
-			FabricanteDAO fabricanteDAO = new FabricanteDAO();
-			fabricanteDAO.excluir(fabricante);
-
-			fabricantes = fabricanteDAO.listar();
+			String json = caminho.request().get(String.class);
+			Fabricante[] vetor = gson.fromJson(json, Fabricante[].class);
+			fabricantes = Arrays.asList(vetor);
 
 			Messages.addGlobalInfo("Fabricante removido com sucesso");
+			
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover o fabricante");
 			erro.printStackTrace();
