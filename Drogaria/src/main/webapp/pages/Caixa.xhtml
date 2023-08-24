@@ -8,33 +8,39 @@
 	template="/templates/Modelo.xhtml">
 
 	<ui:define name="conteudo">
-	
 		<h:form>
 			<p:schedule value="#{caixaBean.caixas}">
-				<p:ajax event="dateSelect" oncomplete="PF('dialogo').show();" />
+				<p:ajax event="dateSelect" listener="#{caixaBean.novo}"
+					oncomplete="PF('dialogo').show();"
+					update=":formularioCadastro:painel" />
 			</p:schedule>
 		</h:form>
-		
-		<p:dialog closable="true" header="Caixa" draggable="true" modal="true" resizable="false" widgetVar="dialogo">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:outputLabel value="Data de Abertura:" />
-					<p:calendar/>
-					
-					<p:outputLabel value="Valor de Abertura:" />
-					<p:inputText/>
-					
-					<p:outputLabel value="Funcionário:" />
-					<p:selectOneMenu>
-						<f:selectItem noSelectionOption="true" itemLabel="Selecione um Funcionário"  />
+
+		<p:dialog header="Caixa" closable="true" draggable="false"
+			modal="true" resizable="false" widgetVar="dialogo">
+			<h:form id="formularioCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Data de Abertura: " />
+					<p:inputText value="#{caixaBean.caixa.dataAbertura}">
+						<f:convertDateTime locale="pt_BR" />
+					</p:inputText>
+
+					<p:outputLabel value="Valor de Abertura: " />
+					<p:inputText value="#{caixaBean.caixa.valorAbertura}" />
+
+					<p:outputLabel value="Funcionário: " />
+					<p:selectOneMenu value="#{caixaBean.caixa.funcionario}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um funcionário" />
+						<f:selectItems value="#{caixaBean.funcionarios}" var="funcionario" itemValue="#{funcionario}"
+							itemLabel="#{funcionario.pessoa.nome}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
-				<h:panelGrid>
+				<h:panelGrid columns="1">
 					<p:commandButton value="Salvar" oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
-				
 			</h:form>
 		</p:dialog>
-
 	</ui:define>
 </ui:composition>
