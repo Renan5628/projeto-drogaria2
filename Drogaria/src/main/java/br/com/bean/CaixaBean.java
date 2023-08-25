@@ -1,5 +1,6 @@
 package br.com.bean;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -7,10 +8,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.omnifaces.util.Messages;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
+import br.com.dao.CaixaDAO;
 import br.com.dao.FuncionarioDAO;
 import br.com.domain.Caixa;
 import br.com.domain.Funcionario;
@@ -58,5 +61,20 @@ public class CaixaBean {
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		funcionarios = funcionarioDAO.listar();
+	}
+	
+	public void salvar() {
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(caixa.getDataAbertura());
+		calendar.add(Calendar.DATE, 1);
+		
+		caixa.setDataAbertura(calendar.getTime());
+		
+		CaixaDAO caixaDAO = new CaixaDAO();
+		caixaDAO.salvar(caixa);
+		
+		Messages.addGlobalInfo("Caixa aberto com sucesso!");
+		
 	}
 }
