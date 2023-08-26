@@ -17,7 +17,6 @@ import org.omnifaces.util.Messages;
 
 import com.google.gson.Gson;
 
-import br.com.dao.FabricanteDAO;
 import br.com.domain.Fabricante;
 
 @SuppressWarnings("serial")

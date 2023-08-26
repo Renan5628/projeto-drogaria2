@@ -1,6 +1,8 @@
 package br.com.bean;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -8,7 +10,6 @@ import javax.faces.bean.SessionScoped;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
-import org.omnifaces.util.Messages.Message;
 
 import br.com.dao.UsuarioDAO;
 import br.com.domain.Pessoa;
@@ -62,6 +63,18 @@ public class AutenticacaoBean {
 			Messages.addGlobalError("Erro no redirecionamento de tela");
 		}
 		
+		
+		
 	}
+	public boolean temPermissoes(List<String> permissoes) {
+		
+		for (String permissao: permissoes) {
+			if(usuarioLogado.getTipo() == permissao.charAt(0)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}	
 	
 }
