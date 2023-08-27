@@ -2,11 +2,14 @@ package br.com.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,7 +30,19 @@ public class Venda extends GenericDomain {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Funcionario funcionario;
-
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "venda")
+	private List<ItemVenda> itemVendas;
+	
+	
+	public List<ItemVenda> getItemVendas() {
+		return itemVendas;
+	}
+	
+	public void setItemVendas(List<ItemVenda> itemVendas) {
+		this.itemVendas = itemVendas;
+	}
+	
 	public Date getHorario() {
 		return horario;
 	}

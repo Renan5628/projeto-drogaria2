@@ -35,6 +35,7 @@ public class VendaBean implements Serializable {
 	private List<Funcionario> funcionarios;
 	private Funcionario funcionario;
 	private Venda venda;
+	private List<Venda> vendas;
 	
 	
 	
@@ -86,9 +87,16 @@ public class VendaBean implements Serializable {
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
+	
+	public List<Venda> getVendas() {
+		return vendas;
+	}
+	
+	public void setVendas(List<Venda> vendas) {
+		this.vendas = vendas;
+	}
 
 	
-	@PostConstruct
 	public void novo() {
 		try {
 			
@@ -104,6 +112,11 @@ public class VendaBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar carregar a tela de vendas.");
 			erro.printStackTrace();
 		}
+	}
+	
+	public void listar() {
+		VendaDAO vendaDAO = new VendaDAO();
+		vendas = vendaDAO.listar("horario");
 	}
 	
 	public void adicionar(ActionEvent event){

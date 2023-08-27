@@ -69,6 +69,13 @@
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 						</p:commandButton>
+						
+						<p:commandButton icon="ui-icon-arrowthick-1-s" actionListener="#{produtoBean.download}"
+							ajax="false">
+							<f:attribute name="produtoSelecionado" value="#{produto}" />
+							<p:fileDownload value="#{produtoBean.foto}"/>
+						</p:commandButton>
+						
 					</p:column>
 				</p:dataTable>
 
