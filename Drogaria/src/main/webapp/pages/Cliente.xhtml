@@ -11,7 +11,7 @@
 
 	<h:form id="formListagem">
 		<p:panel header="Clientes - Listagem">
-			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+			<p:dataTable id="tabela" widgetVar="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{clienteBean.clientes}" var="cliente"
 				rows="5">
 				<f:facet name="header">
@@ -41,7 +41,14 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Liberado" sortBy="#{cliente.liberado}">
+				<p:column headerText="Liberado" sortBy="#{cliente.liberado}" filterBy="#{cliente.liberado}">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('tabela').filter()" >
+							<f:selectItem itemValue="" itemLabel="Todos" />
+							<f:selectItem itemValue="true" itemLabel="Sim" />
+							<f:selectItem itemValue="false" itemLabel="Não" />
+						</p:selectOneButton>
+					</f:facet>
 					<p:selectBooleanCheckbox value="#{cliente.liberado}"
 						disabled="true" />
 				</p:column>
