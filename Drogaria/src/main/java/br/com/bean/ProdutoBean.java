@@ -195,6 +195,8 @@ public class ProdutoBean implements Serializable {
 			FileInputStream inputStream = new FileInputStream(Faces.getRealPath("/reports/produtos.jrxml"));
 			JasperReport caminho = JasperCompileManager.compileReport(inputStream);
 			
+			String caminhoBanner = Faces.getRealPath("/resources/images/banner.png");
+			
 
 			Map<String, Object> parametros = new HashMap<>();
 			if (proDescricao == null) {
@@ -207,6 +209,8 @@ public class ProdutoBean implements Serializable {
 			} else {
 				parametros.put("FABRICANTE_DESCRICAO", "%" + fabDescricao + "%");
 			}
+			
+			parametros.put("CAMINHO_BANNER", caminhoBanner);
 
 			Connection conexao = HibernateUtil.getConexao();
 
