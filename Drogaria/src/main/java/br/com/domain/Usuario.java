@@ -20,10 +20,8 @@ public class Usuario extends GenericDomain {
 	@Transient
 	private String senhaSemCriptografia;
 	
-	@Column(nullable = false)
-	private Character tipo;
 	
-	@Column(nullable = true)
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoUsuario tipoUsuario;
 	
@@ -42,13 +40,6 @@ public class Usuario extends GenericDomain {
 		this.senha = senha;
 	}
 
-	public Character getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(Character tipo) {
-		this.tipo = tipo;
-	}
 
 	public Boolean getAtivo() {
 		return ativo;
@@ -66,19 +57,14 @@ public class Usuario extends GenericDomain {
 		this.pessoa = pessoa;
 	}
 	
-	public String getTipoFormatado() {
-		
-		String tipoFormatado = null;
-		
-		if(tipo == 'A'){
-			tipoFormatado = "Administrador";
-		}else if(tipo == 'G'){
-			tipoFormatado = "Gerente";
-		}else{
-			tipoFormatado = "Balconista";
-		}
-		return tipoFormatado;
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
 	}
+	
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+	
 
 	public String getAtivoFormatado() {
 		String ativoFormatado = "Não";

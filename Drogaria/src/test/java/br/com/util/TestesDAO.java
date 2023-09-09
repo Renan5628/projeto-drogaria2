@@ -29,6 +29,7 @@ import br.com.domain.Pessoa;
 import br.com.domain.Produto;
 import br.com.domain.Usuario;
 import br.com.domain.Venda;
+import br.com.enumeracao.TipoUsuario;
 
 public class TestesDAO {
 
@@ -270,7 +271,7 @@ public class TestesDAO {
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
 		usuario.setSenha(hash.toHex());
 		
-		usuario.setTipo('A');
+		usuario.setTipoUsuario(TipoUsuario.BALCONISTA);
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);

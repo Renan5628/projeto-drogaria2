@@ -33,8 +33,8 @@
 						<h:outputText value="#{usuario.pessoa.cpf}" />
 					</p:column>
 
-					<p:column headerText="Tipo" sortBy="#{usuario.tipoFormatado}">
-						<h:outputText value="#{usuario.tipoFormatado}" />
+					<p:column headerText="Tipo" sortBy="#{usuario.tipoUsuario.toString()}">
+						<h:outputText value="#{usuario.tipoUsuario.toString()}" />
 					</p:column>
 
 					<p:column headerText="Ativo" sortBy="#{usuario.ativoFormatado}">

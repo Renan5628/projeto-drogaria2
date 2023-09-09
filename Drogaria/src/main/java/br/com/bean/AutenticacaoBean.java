@@ -66,15 +66,6 @@ public class AutenticacaoBean {
 		
 		
 	}
-	public boolean temPermissoes(List<String> permissoes) {
-		
-		for (String permissao: permissoes) {
-			if(usuarioLogado.getTipo() == permissao.charAt(0)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}	
+
 	
 }
