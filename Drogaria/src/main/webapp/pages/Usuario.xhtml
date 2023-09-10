@@ -96,11 +96,11 @@
 					</p:password>
 
 					<p:outputLabel for="tipo" value="Tipo:" />
-					<p:selectOneRadio id="tipo" value="#{usuarioBean.usuario.tipo}"
+					<p:selectOneRadio id="tipo" value="#{usuarioBean.usuario.tipoUsuario}"
 						required="true" requiredMessage="O campo 'Tipo' é obrigatório">
-						<f:selectItem itemValue="A" itemLabel="Administrador" />
-						<f:selectItem itemValue="G" itemLabel="Gerente" />
-						<f:selectItem itemValue="B" itemLabel="Balconista" />
+						<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
+						<f:selectItem itemValue="GERENTE" itemLabel="Gerente" />
+						<f:selectItem itemValue="BALCONISTA" itemLabel="Balconista" />
 					</p:selectOneRadio>
 
 					<p:outputLabel for="ativo" value="Ativo:" />

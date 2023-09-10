@@ -77,7 +77,7 @@ public class UsuarioBean implements Serializable {
 			usuarioDAO.merge(usuario);
 
 			usuario = new Usuario();
-			usuarios = usuarioDAO.listar("tipo");
+			usuarios = usuarioDAO.listar("tipoUsuario");
 
 			PessoaDAO pessoaDAO = new PessoaDAO();
 			pessoas = pessoaDAO.listar("nome");
