@@ -44,6 +44,7 @@
 		<mapping class="br.com.domain.Historico" />
 		<mapping class="br.com.domain.Caixa" />
 		<mapping class="br.com.domain.Movimentacao" />
+		<mapping class="br.com.domain.Menu" />
 		
 
     </session-factory>
