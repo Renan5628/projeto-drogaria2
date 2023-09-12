@@ -12,7 +12,7 @@
 	<h:form id="formListagem">
 		<p:panel header="Fabricantes - Listagem">
 			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-				var="fabricante" rows="5" paginatorPosition="top" value="#{fabricanteBean.fabricantes}">
+				var="fabricante" rows="5" paginator="true" value="#{fabricanteBean.fabricantes}">
 
 				<f:facet name="header">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 

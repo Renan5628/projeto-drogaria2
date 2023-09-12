@@ -68,11 +68,6 @@ public class FabricanteBean implements Serializable {
 
 	public void salvar() {
 		try {
-			//FabricanteDAO fabricanteDAO = new FabricanteDAO();
-			//fabricanteDAO.merge(fabricante);
-
-			//fabricante = new Fabricante();
-			//fabricantes = fabricanteDAO.listar();
 			
 			Client cliente = ClientBuilder.newClient();
 			WebTarget caminho = cliente.target("http://127.0.0.1:8080/Drogaria/rest/fabricante");
@@ -124,5 +119,21 @@ public class FabricanteBean implements Serializable {
 
 	public void editar(ActionEvent evento) {
 		fabricante = (Fabricante) evento.getComponent().getAttributes().get("fabricanteSelecionado");
+		
+		Client cliente = ClientBuilder.newClient();
+		WebTarget caminho =  cliente.target("http://127.0.0.1:8080/Drogaria/rest/fabricante");
+		
+		WebTarget caminhoEditar = caminho.path("{codigo}").resolveTemplate("codigo", fabricante.getCodigo());
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(fabricante);
+		caminhoEditar.request().put(Entity.json(json));
+
+		json = caminho.request().get(String.class);
+		Fabricante[] vetor = gson.fromJson(json, Fabricante[].class);
+		fabricantes = Arrays.asList(vetor);
+
+		Messages.addGlobalInfo("Fabricante removido com sucesso");
+		
 	}
 }

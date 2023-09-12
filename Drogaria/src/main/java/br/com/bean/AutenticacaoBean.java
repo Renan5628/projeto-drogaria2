@@ -1,8 +1,6 @@
 package br.com.bean;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -10,7 +8,6 @@ import javax.faces.bean.SessionScoped;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
-import org.primefaces.model.menu.MenuModel;
 
 import br.com.dao.UsuarioDAO;
 import br.com.domain.Pessoa;

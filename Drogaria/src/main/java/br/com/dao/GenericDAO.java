@@ -29,7 +29,7 @@ public class GenericDAO<E> {
 		
 		try {
 			transaction = sessao.beginTransaction();
-			sessao.save(entity);
+			sessao.merge(entity);
 			transaction.commit();
 			
 		} catch (RuntimeException e) {
@@ -130,7 +130,7 @@ public class GenericDAO<E> {
 		
 		try {
 			transaction = sessao.beginTransaction();
-			sessao.update(entity);
+			sessao.merge(entity);
 			transaction.commit();
 			
 		} catch (RuntimeException e) {

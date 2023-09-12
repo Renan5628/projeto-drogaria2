@@ -56,15 +56,17 @@ public class FabricanteService {
 
 		// http://127.0.0.1:8080/Drogaria/rest/fabricante
 		@PUT
-		public String editar(String json) {
-			Gson gson = new Gson();
-			Fabricante fabricante = gson.fromJson(json, Fabricante.class);
-
+		@Path("{codigo}")
+		public String editar(@PathParam("codigo")  Long codigo){
+			
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
+			Fabricante fabricante = fabricanteDAO.buscar(codigo);
 			fabricanteDAO.editar(fabricante);
-
-			String jsonSaida = gson.toJson(fabricante);
-			return jsonSaida;
+			
+			Gson gson = new Gson();
+			
+			String saida = gson.toJson(fabricante);
+			return saida;
 		}
 		
 		// http://127.0.0.1:8080/Drogaria/rest/fabricante/{codigo}

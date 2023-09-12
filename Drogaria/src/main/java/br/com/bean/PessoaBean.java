@@ -22,7 +22,6 @@ import br.com.dao.EstadoDAO;
 import br.com.dao.PessoaDAO;
 import br.com.domain.Cidade;
 import br.com.domain.Estado;
-import br.com.domain.Fabricante;
 import br.com.domain.Pessoa;
 
 @SuppressWarnings("serial")
