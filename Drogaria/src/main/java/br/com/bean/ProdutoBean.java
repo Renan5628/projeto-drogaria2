@@ -106,11 +106,13 @@ public class ProdutoBean implements Serializable {
 	
 	public void editar(ActionEvent evento){
 		try {
-			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
-			produto.setCaminho("C:/ProgramaçãoWeb/Uploads/" + produto.getCodigo() + ".png");
-
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricantes = fabricanteDAO.listar();
+			
+			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
+			produto.setCaminho("C:/ProgramaçãoWeb/Uploads/" + produto.getCodigo() + ".png");
+			
+			
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar selecionar um produto");
 			erro.printStackTrace();
@@ -239,6 +241,7 @@ public class ProdutoBean implements Serializable {
 		}
 		
 	}
-		  
+	
+	  
 	
 }
