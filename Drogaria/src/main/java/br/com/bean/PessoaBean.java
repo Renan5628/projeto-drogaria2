@@ -123,7 +123,7 @@ public class PessoaBean implements Serializable {
 			
 
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar gerar uma nova pessoa");
+			Messages.addGlobalError("Ocorreu um erro ao tentar editar a pessoa");
 			erro.printStackTrace();
 		}
 
@@ -154,6 +154,22 @@ public class PessoaBean implements Serializable {
 	}
 
 	public void excluir(ActionEvent evento) {
+		
+		try {
+			pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
+			
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoaDAO.excluir(pessoa);
+			
+			pessoas = pessoaDAO.listar("nome");
+			
+			Messages.addGlobalInfo("Pessoa excluida com sucesso!");
+			
+
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar excluir a pessoa");
+			erro.printStackTrace();
+		}
 
 	}
 
