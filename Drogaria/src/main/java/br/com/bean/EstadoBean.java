@@ -20,12 +20,32 @@ public class EstadoBean implements Serializable  {
 	
 	private Estado estado;
 	private List<Estado> estados;
-	private EstadoDAO estadoDAO = new EstadoDAO();
+	
+	public Estado getEstado() {
+		return estado;
+	}
+	
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+	
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+	
+	public void novo(){
+		estado = new Estado();
+	}
 	
 	public void salvar(){
 		
 		try {
-			
+			EstadoDAO estadoDAO = new EstadoDAO();
 			estadoDAO.merge(estado);
 			novo();
 			estados = estadoDAO.listar();
@@ -42,6 +62,7 @@ public class EstadoBean implements Serializable  {
 	public void listar(){
 		
 		try {
+			EstadoDAO estadoDAO = new EstadoDAO();
 			estados = estadoDAO.listar();   
 			
 		} catch (Exception e) {
@@ -52,7 +73,8 @@ public class EstadoBean implements Serializable  {
 	}
 	
 	public void excluir(ActionEvent evento){
-		try {
+		try {	
+				EstadoDAO estadoDAO = new EstadoDAO();
 				estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
 				estadoDAO.excluir(estado);
 				estados = estadoDAO.listar();
@@ -70,27 +92,6 @@ public class EstadoBean implements Serializable  {
 		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
 
 	}
-	
-	public Estado getEstado() {
-		return estado;
-	}
-	
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-	
-	public void novo(){
-		estado = new Estado();
-	}
-
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
-	}
-	
 	
 
 }

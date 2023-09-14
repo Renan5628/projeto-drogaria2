@@ -46,7 +46,7 @@
 
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{pessoaBean.editar}"
-							update=" :formCadastro:painel" oncomplete="PF('dialogo').show();">
+							update=" :formCadastro:painel :mensagem" oncomplete="PF('dialogo').show();">
 							<f:attribute name="pessoaSelecionada" value="#{pessoa}" />
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />

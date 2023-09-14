@@ -120,7 +120,6 @@ public class PessoaBean implements Serializable {
 			CidadeDAO cidadeDAO = new CidadeDAO();
 			cidades = cidadeDAO.buscarPorEstado(estado.getCodigo());
 			
-			
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar editar a pessoa");
